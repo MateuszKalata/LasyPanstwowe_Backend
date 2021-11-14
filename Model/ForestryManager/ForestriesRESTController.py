@@ -53,3 +53,10 @@ def send_forestry(id):
     if xforestry == 1:
         return "not found", 404
     return jsonify(xforestry.as_dict()), 200
+
+
+@forestries_controller.after_request
+def after_request(response):
+    header = response.headers
+    header['Access-Control-Allow-Origin'] = '*'
+    return response
