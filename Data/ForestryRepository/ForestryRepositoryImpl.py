@@ -13,6 +13,7 @@ class ForestryRepositoryImpl(IForestryRepository):
         self.forestry_mapper = ForestryMapper()
         self.engine = create_engine(DB_URI)
         self.Session = sessionmaker(bind=self.engine)
+        ForestryEntity.metadata.create_all(bind=self.engine)
 
     def create(self, xforestry):
         session = self.Session()

@@ -14,6 +14,8 @@ class ForestAreaRepositoryImpl(IForestAreaRepository):
         self.forest_area_mapper = ForestAreaMapper()
         self.engine = create_engine(DB_URI)
         self.Session = sessionmaker(bind=self.engine)
+        ForestAreaEntity.metadata.create_all(bind=self.engine)
+        ForestationTypeEntity.metadata.create_all(bind=self.engine)
 
     def create(self, xforestarea):
         session = self.Session()
