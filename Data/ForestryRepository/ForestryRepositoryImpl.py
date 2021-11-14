@@ -4,13 +4,14 @@ from sqlalchemy.orm import sessionmaker
 from Data.ForestryRepository.ForestryMapper import ForestryMapper
 from Data.ForestryRepository.IForestryRepository import IForestryRepository
 from Entities.ForestryEntity import ForestryEntity
+from conf import DB_URI
 
 
 class ForestryRepositoryImpl(IForestryRepository):
 
     def __init__(self):
         self.forestry_mapper = ForestryMapper()
-        self.engine = create_engine('postgresql://postgres:password@localhost')
+        self.engine = create_engine(DB_URI)
         self.Session = sessionmaker(bind=self.engine)
 
     def create(self, xforestry):

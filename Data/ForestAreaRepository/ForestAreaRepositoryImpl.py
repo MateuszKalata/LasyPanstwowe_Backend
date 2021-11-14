@@ -5,16 +5,15 @@ from Data.ForestAreaRepository.ForestAreaMapper import ForestAreaMapper
 from Data.ForestAreaRepository.IForestAreaRepository import IForestAreaRepository
 from Entities.ForestAreaEntity import ForestAreaEntity
 from Entities.ForestationTypeEntity import ForestationTypeEntity
+from conf import DB_URI
 
 
 class ForestAreaRepositoryImpl(IForestAreaRepository):
 
     def __init__(self):
         self.forest_area_mapper = ForestAreaMapper()
-        self.engine = create_engine('postgresql://postgres:password@localhost')
+        self.engine = create_engine(DB_URI)
         self.Session = sessionmaker(bind=self.engine)
-        ForestAreaEntity.metadata.create_all(bind=self.engine)
-        ForestationTypeEntity.metadata.create_all(bind=self.engine)
 
     def create(self, xforestarea):
         session = self.Session()
