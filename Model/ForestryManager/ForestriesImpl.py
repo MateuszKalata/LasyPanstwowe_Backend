@@ -2,6 +2,7 @@ from Model.ForestryManager.IForestires import IForestries
 from Model.ForestryManager.IForestAreas import IForestAreas
 from Data.ForestryRepository.ForestryRepositoryImpl import ForestryRepositoryImpl
 from Data.ForestAreaRepository.ForestAreaRepositoryImpl import ForestAreaRepositoryImpl
+from DTO.XForestryDetails import XForestryDetails
 
 
 class ForestriesImpl(IForestries, IForestAreas):
@@ -20,7 +21,9 @@ class ForestriesImpl(IForestries, IForestAreas):
         return list(filter(lambda x: x.forestry_id == forestry_id, self.forest_area_repository.read_all()))
 
     def get_forestry(self, id):
-        return self.forestry_repository.read(id)
+        xforestry = self.forestry_repository.read(id)
+        xforestareas = self.get_forest_areas(xforestry.id)
+        return XForestryDetails(xforestry, xforestareas)
 
     def get_forestries(self):
         return self.forestry_repository.read_all()
