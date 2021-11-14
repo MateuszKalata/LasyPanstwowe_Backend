@@ -1,9 +1,10 @@
 from abc import ABC, abstractmethod
 
+
 class IForestryRepository(ABC):
 
     @abstractmethod
-    def create(self, forestryEntity):
+    def create(self, forestry_entity):
         pass
 
     @abstractmethod
@@ -11,6 +12,5 @@ class IForestryRepository(ABC):
         pass
 
     @abstractmethod
-    def readAll(self):
+    def read_all(self):
         pass
-

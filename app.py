@@ -1,10 +1,8 @@
 from flask import Flask
- 
+from Model.ForestryManager.ForestriesRESTController import forestries_controller
+
 app = Flask(__name__)
- 
-@app.route("/")
-def home_view():
-        return "<h1>Welcome to Geeks for Geekss saas</h1>"
- 
+app.register_blueprint(forestries_controller)
+
 if __name__ == "__main__":
-        app.run()
+    app.run()
