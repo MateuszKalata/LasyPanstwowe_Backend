@@ -1,3 +1,3 @@
 import os
 
-DB_URI = os.environ.get('DB_URI', 'postgresql://postgres:password@localhost')
+DB_URI = os.environ.get('DB_URI', 'postgresql://admin:password@db/lasy_database')
