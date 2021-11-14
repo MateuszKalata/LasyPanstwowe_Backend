@@ -55,8 +55,3 @@ def send_forestry(id):
     return jsonify(xforestry.as_dict()), 200
 
 
-@forestries_controller.after_request
-def after_request(response):
-    header = response.headers
-    header['Access-Control-Allow-Origin'] = '*'
-    return response
