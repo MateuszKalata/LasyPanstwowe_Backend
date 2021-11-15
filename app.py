@@ -1,10 +1,12 @@
 from flask import Flask, request
 from Model.ForestryManager.ForestriesRESTController import forestries_controller
 from conf import AUTH_PASS, AUTH_LOGIN
+from flask_cors import CORS
 
 
 app = Flask(__name__)
 app.register_blueprint(forestries_controller)
+CORS(app)
 
 
 def check_auth(username, password):
@@ -16,13 +18,6 @@ def before_request():
     auth = request.authorization
     if not (auth and check_auth(auth.username, auth.password)):
         return 'Unauthorized', 401
-
-
-@app.after_request
-def after_request(response):
-    header = response.headers
-    header['Access-Control-Allow-Origin'] = '*'
-    return response
 
 
 if __name__ == "__main__":
