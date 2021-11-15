@@ -1,1 +1,0 @@
-web: gunicorn --chdir Model/Core app:app
