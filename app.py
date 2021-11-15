@@ -1,7 +1,6 @@
-from flask import Flask, request
+from flask import Flask, request, make_response
 from Model.ForestryManager.ForestriesRESTController import forestries_controller
 from conf import AUTH_PASS, AUTH_LOGIN
-
 
 app = Flask(__name__)
 app.register_blueprint(forestries_controller)
@@ -19,9 +18,13 @@ def before_request():
 
 
 @app.after_request
-def after_request(response):
-    header = response.headers
-    header['Access-Control-Allow-Origin'] = '*'
+def after_request_func(response):
+    if request.method == 'OPTIONS':
+        response = make_response()
+        response.headers.add('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE')
+    response.headers.add('Access-Control-Allow-Credentials', 'true')
+    response.headers.add('Access-Control-Allow-Headers', '*')
+    response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
 
