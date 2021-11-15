@@ -21,4 +21,4 @@ class SensorManager(ISensors,ISensorsRegistration):
         return self.sensorRepository.readNotAssigned()
 
     def RegisterSensor(self, sensor):
-        return self.sensorRepository.create(sensor.id)
+        return self.sensorRepository.create(sensor)

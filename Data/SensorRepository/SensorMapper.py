@@ -3,7 +3,7 @@ from Entities.SensorEntity import SensorEntity
 
 class SensorMapper:
 
-    def convertSensorEntityToXSensor(sensorEntity):
+    def convertSensorEntityToXSensor(self, sensorEntity):
         return XSensor(
             sensorEntity.administrator, 
             sensorEntity.dateAdded, 
@@ -14,7 +14,7 @@ class SensorMapper:
             sensorEntity.type, 
             sensorEntity.unit)
 
-    def convertXSensorToSensorEntity(xSensor):
+    def convertXSensorToSensorEntity(self, xSensor):
         return SensorEntity(
             xSensor.administrator, 
             xSensor.dateAdded, 

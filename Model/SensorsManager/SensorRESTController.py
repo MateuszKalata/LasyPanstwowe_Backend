@@ -13,17 +13,17 @@ def __init__(self, SensoreManager):
 @sensors_controller.route('/submit/<id>', methods=['POST'])
 def submit(id):
     xsensor = XSensor(
-        request.json.get('administrator'),
-        request.json.get('data_added'),
-        request.json.get('forest_area_id'),
+        request.form.get('administrator'),
+        request.form.get('data_added'),
+        request.form.get('forest_area_id'),
         None,
-        request.json.get('name'),
-        request.json.get('status'),
-        request.json.get('type'),
-        request.json.get('unit')
+        request.form.get('name'),
+        request.form.get('status'),
+        request.form.get('type'),
+        request.form.get('unit')
     )
     status = sensorMenager.RegisterSensor(xsensor)
-    return status
+    return str(status)
 
 @sensors_controller.route('/send/sensor/<id>', methods = ['GET'])
 def sendSensor(id):
