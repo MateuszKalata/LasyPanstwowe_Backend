@@ -1,7 +1,7 @@
-from ISensors import ISensors
-from ISensorsRegistration import ISensorsRegistration
-from Data.SensorRepositoryImpl import SensorRepositoryImpl
-from DTO import XSensor
+from Model.SensorsManager.ISensors import ISensors
+from Model.SensorsManager.ISensorsRegistration import ISensorsRegistration
+from Data.SensorRepository.SensorRepositoryImpl import SensorRepositoryImpl
+
 
 class SensorManager(ISensors,ISensorsRegistration):
 

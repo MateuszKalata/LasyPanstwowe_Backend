@@ -1,9 +1,11 @@
 from flask import Flask, request, make_response
 from Model.ForestryManager.ForestriesRESTController import forestries_controller
+from Model.SensorsManager.SensorRESTController import sensors_controller
 from conf import AUTH_PASS, AUTH_LOGIN
 
 app = Flask(__name__)
 app.register_blueprint(forestries_controller)
+app.register_blueprint(sensors_controller)
 
 
 def check_auth(username, password):

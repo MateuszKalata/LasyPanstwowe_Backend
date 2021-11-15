@@ -1,11 +1,10 @@
 import sqlalchemy.exc
 from sqlalchemy import create_engine
-from sqlalchemy.orm import session, sessionmaker
-from ISensorRepository import ISensorRepository
+from sqlalchemy.orm import sessionmaker
+from Data.SensorRepository.ISensorRepository import ISensorRepository
 from Entities.SensorEntity import SensorEntity
-from Model.DTO.XSensor import XSensor
-from SensorMapper import SensorMapper
-from Model.conf import DB_URI
+from Data.SensorRepository.SensorMapper import SensorMapper
+from conf import DB_URI
 
 
 

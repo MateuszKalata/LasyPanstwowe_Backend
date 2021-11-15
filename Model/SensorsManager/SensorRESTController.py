@@ -1,7 +1,7 @@
 # zostawić tutaj tylko komunikacje z klientem
 from flask import Blueprint, request, jsonify
 from DTO.XSensor import XSensor
-from SensorManager import SensorManager
+from Model.SensorsManager.SensorManager import SensorManager
 
 
 sensors_controller = Blueprint('SensorRESTController',__name__)
