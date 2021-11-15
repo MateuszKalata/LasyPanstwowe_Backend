@@ -22,6 +22,7 @@ def before_request():
 def after_request(response):
     header = response.headers
     header['Access-Control-Allow-Origin'] = '*'
+    header['Access-Control-Allow-Headers'] = 'Content-Type'
     return response
 
 
