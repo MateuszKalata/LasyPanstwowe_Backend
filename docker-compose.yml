@@ -1,0 +1,29 @@
+# Use postgres/example user/password credentials
+version: '3.1'
+
+services:
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - 5000:5000
+
+  db:
+    image: postgres
+    restart: always
+    env_file:
+      - database.env
+    ports:
+      - 5432:5432
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
