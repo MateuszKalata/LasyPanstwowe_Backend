@@ -1,5 +1,5 @@
 from sqlalchemy.orm import declarative_base
-from sqlalchemy import Column, Integer, String, Date
+from sqlalchemy import Column, Integer, String, Float
 
 Base = declarative_base()
 
@@ -8,13 +8,14 @@ class SensorEntity(Base):
 
     id = Column(Integer, primary_key=True)
     administrator = Column(String(200))
-    dateAdded = Column(Date)
-    #dateAdded = Column(String(200))
-    forest_area_id = Column(Integer)
+    dateAdded = Column(String(200))
+    forestAreaId = Column(String(200))
     name = Column(String(200))
     status = Column(String(200))
     type = Column(String(200))
     unit = Column(String(200))
+    longitude = Column(Float(8))
+    latitude = Column(Float(8))
 
 
     def __init__(self,administrator,dateAdded, forestAreaId, name, status, type, unit):

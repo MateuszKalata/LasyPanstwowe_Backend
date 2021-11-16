@@ -4,14 +4,14 @@ from sqlalchemy.orm import sessionmaker
 from Data.ForestryRepository.ForestryMapper import ForestryMapper
 from Data.ForestryRepository.IForestryRepository import IForestryRepository
 from Entities.ForestryEntity import ForestryEntity
-from conf import DB_URI
+from conf import DATABASE_URL
 
 
 class ForestryRepositoryImpl(IForestryRepository):
 
     def __init__(self):
         self.forestry_mapper = ForestryMapper()
-        self.engine = create_engine(DB_URI)
+        self.engine = create_engine(DATABASE_URL)
         self.Session = sessionmaker(bind=self.engine)
         ForestryEntity.metadata.create_all(bind=self.engine)
 
@@ -20,8 +20,9 @@ class ForestryRepositoryImpl(IForestryRepository):
         forestry_entity = self.forestry_mapper.convert_xforestry_to_forestry_entity(xforestry)
         session.add(forestry_entity)
         session.commit()
+        forestry_entity_id = forestry_entity.id
         session.close()
-        return 0
+        return forestry_entity_id
 
     def read(self, id):
         session = self.Session()
