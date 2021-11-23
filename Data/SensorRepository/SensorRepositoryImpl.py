@@ -58,7 +58,7 @@ class SensorRepositoryImpl(ISensorRepository):
     def readNotAssigned(self):
         session = self.Session()
         try:
-            sensorsEntities = session.query(SensorEntity).filter(SensorEntity.forestAreaId == None).all()
+            sensorsEntities = session.query(SensorEntity).filter(SensorEntity.forestAreaId == "").all()
         except sqlalchemy.exc.NoResultFound:
             return 1
         session.close()
