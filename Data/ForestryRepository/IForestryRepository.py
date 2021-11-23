@@ -1,10 +1,10 @@
 from abc import ABC, abstractmethod
-from Model.Core import SensorEntity
+
 
 class IForestryRepository(ABC):
 
     @abstractmethod
-    def create(self, SensorEntity):
+    def create(self, forestry_entity):
         pass
 
     @abstractmethod
@@ -12,9 +12,5 @@ class IForestryRepository(ABC):
         pass
 
     @abstractmethod
-    def readAll(self):
-        pass
-
-    @abstractmethod
-    def update(self, SensorEntity):
+    def read_all(self):
         pass

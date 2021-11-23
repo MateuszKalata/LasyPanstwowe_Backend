@@ -1,1 +1,1 @@
-web: gunicorn --chdir Model/Core app:app
+web: gunicorn -w 3 -t 15 app:app

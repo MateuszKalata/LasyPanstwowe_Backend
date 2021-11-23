@@ -1,29 +1,37 @@
 import sqlalchemy.exc
 from sqlalchemy import create_engine
-from sqlalchemy.orm import session, sessionmaker
-from ISensorRepository import ISensorRepository
+from sqlalchemy.orm import sessionmaker
+from DTO.XSensor import XSensor
+from Data.SensorRepository.ISensorRepository import ISensorRepository
 from Entities.SensorEntity import SensorEntity
-from Model.DTO.XSensor import XSensor
-from SensorMapper import SensorMapper
-from Model.conf import DB_URI
-
+from Data.SensorRepository.SensorMapper import SensorMapper
+from conf import DATABASE_URL
 
 
 class SensorRepositoryImpl(ISensorRepository):
 
+    allowedTypes = ["fire","humidity","rain","wind","temperature","camera","camera_trap"]
+    allowedUnits = ["","%","K","°C","°F","C","F","bool","m/s","km/h","mm"]
     def __init__(self):
         self.sensorMapper = SensorMapper()
-        self.engine = create_engine(DB_URI)
+        self.engine = create_engine(DATABASE_URL)
         self.Session = sessionmaker(bind=self.engine)
         SensorEntity.metadata.create_all(bind=self.engine)
 
     def create(self, xSensor):
-        session = self.Session()
+        #test do sprawdzenia czy taki rodzaj czujnika jest akceptowalny
+        if (xSensor.type not in self.allowedTypes):
+            return -1
+        if (xSensor.unit not in self.allowedUnits):
+            return -2
+
+        session = self.Session()       
         sensorEntity = self.sensorMapper.convertXSensorToSensorEntity(xSensor)
         session.add(sensorEntity)
         session.commit()
+        sensor_entity_id = sensorEntity.id
         session.close()
-        return 0
+        return sensor_entity_id
 
     def read(self, id):
         session = self.Session()
@@ -38,22 +46,25 @@ class SensorRepositoryImpl(ISensorRepository):
     def readByForestry(self, id):
         session = self.Session()
         try:
-            sensorsEntity = session.query(SensorEntity).filter(SensorEntity.forest_area_id == id).all()
+            sensorsEntity = session.query(SensorEntity).filter(SensorEntity.forestAreaId == id).all()
         except sqlalchemy.exc.NoResultFound:
             return 1
         session.close()
-        xSensors = self.sensorMapper.convertSensorEntityToXSensor(sensorsEntity)
+        xSensors = []
+        for entity in sensorsEntity:
+            xSensors.append(self.sensorMapper.convertSensorEntityToXSensor(entity))
         return xSensors
     
-    #przyjąłem, że nie przypisane maja forestry id = 0
     def readNotAssigned(self):
         session = self.Session()
         try:
-            sensorsEntity = session.query(SensorEntity).filter(SensorEntity.forest_area_id == 0).all()
+            sensorsEntities = session.query(SensorEntity).filter(SensorEntity.forestAreaId == None).all()
         except sqlalchemy.exc.NoResultFound:
             return 1
         session.close()
-        xSensors = self.sensorMapper.convertSensorEntityToXSensor(sensorsEntity)
+        xSensors = []
+        for sensorEntity in sensorsEntities:
+            xSensors.append(self.sensorMapper.convertSensorEntityToXSensor(sensorEntity))
         return xSensors
 
     def readAll(self):
@@ -64,12 +75,13 @@ class SensorRepositoryImpl(ISensorRepository):
         return xSensors
 
     #przetestować czy działa bo sam to zrobiłem
+    #nie działa, ale narazie jest niepotrzebne
     def update(self,sensorEntity):
         session = self.Session()
         session.query(SensorEntity).filter(SensorEntity.id == sensorEntity.id).update({
             "administrator":self.administrator,
-            "date_added":self.dateAdded,
-            "forest_area_id":self.forestAreaId,
+            "dateAdded":self.dateAdded,
+            "forestAreaId":self.forestAreaId,
             "name":self.name,
             "status":self.status,
             "type":self.type,
@@ -80,10 +92,17 @@ class SensorRepositoryImpl(ISensorRepository):
         session.close()
         return 0
 
-   #przetestować czy działa bo sam to zrobiłem
-    def AssignSensor(self,sensorId,forestAreaId):
+    def AssignSensor(self,id,forestAreaId):
         session = self.Session()
-        session.query(SensorEntity).filter(SensorEntity.id == sensorId).update({"forest_area_id":forestAreaId})
+        session.query(SensorEntity).filter(SensorEntity.id == id).update({"forestAreaId":forestAreaId})
+        # jeśli działa zbyt wolno to można spóbować przekazać do update() synchronize_session=False    
+        session.commit()
+        session.close()
+        return 0
+
+    def ActivateSensor(self,id):
+        session = self.Session()
+        session.query(SensorEntity).filter(SensorEntity.id == id).update({"status":'active'})
         # jeśli działa zbyt wolno to można spóbować przekazać do update() synchronize_session=False    
         session.commit()
         session.close()

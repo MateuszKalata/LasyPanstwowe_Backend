@@ -1,5 +1,5 @@
 class XSensor():
-    def __init__(self,administrator,dateAdded, forestAreaId, id, name, status, type, unit):
+    def __init__(self,administrator,dateAdded, forestAreaId, id, name, status, type, unit, longitude, latitude):
         self.administrator = administrator
         self.dateAdded = dateAdded
         self.forestAreaId = forestAreaId
@@ -8,6 +8,8 @@ class XSensor():
         self.status = status
         self.type = type
         self.unit = unit
+        self.longitude = longitude
+        self.latitude = latitude
 
     def as_dict(self):
         return{
@@ -18,5 +20,7 @@ class XSensor():
             "name":self.name,
             "status":self.status,
             "type":self.type,
-            "unit":self.unit
+            "unit":self.unit,
+            "longitude": self.longitude,
+            "latitude": self.latitude
         }
