@@ -4,7 +4,7 @@ from Entities.SensorEntity import SensorEntity
 class SensorMapper:
 
     def convertSensorEntityToXSensor(self, sensorEntity):
-        return XSensor(
+        return XSensor (
             sensorEntity.administrator, 
             sensorEntity.dateAdded, 
             sensorEntity.forestAreaId, 
@@ -12,14 +12,20 @@ class SensorMapper:
             sensorEntity.name, 
             sensorEntity.status, 
             sensorEntity.type, 
-            sensorEntity.unit)
+            sensorEntity.unit,
+            sensorEntity.longitude,
+            sensorEntity.latitude
+        )
 
     def convertXSensorToSensorEntity(self, xSensor):
-        return SensorEntity(
+        return SensorEntity (
             xSensor.administrator, 
             xSensor.dateAdded, 
             xSensor.forestAreaId, 
             xSensor.name, 
             xSensor.status, 
             xSensor.type, 
-            xSensor.unit)
+            xSensor.unit,
+            xSensor.longitude,
+            xSensor.latitude 
+        )

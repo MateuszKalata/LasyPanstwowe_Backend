@@ -8,8 +8,8 @@ class SensorManager(ISensors,ISensorsRegistration):
     def __init__(self):
         self.sensorRepository = SensorRepositoryImpl()
 
-    def AssignSensor(self, name, forestAreaId):
-        return self.sensorRepository.AssignSensor(name,forestAreaId)
+    def AssignSensor(self, id, forestAreaId):
+        return self.sensorRepository.AssignSensor(id,forestAreaId)
 
     def GetSensor(self, id):
         return self.sensorRepository.read(id)
@@ -22,3 +22,6 @@ class SensorManager(ISensors,ISensorsRegistration):
 
     def RegisterSensor(self, sensor):
         return self.sensorRepository.create(sensor)
+
+    def ActivateSensor(self, id):
+        return self.sensorRepository.ActivateSensor(id)

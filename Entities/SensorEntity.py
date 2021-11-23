@@ -18,7 +18,7 @@ class SensorEntity(Base):
     latitude = Column(Float(8))
 
 
-    def __init__(self,administrator,dateAdded, forestAreaId, name, status, type, unit):
+    def __init__(self,administrator,dateAdded, forestAreaId, name, status, type, unit, longitude, latitude):
         self.administrator = administrator
         self.dateAdded = dateAdded
         self.forestAreaId = forestAreaId
@@ -26,3 +26,5 @@ class SensorEntity(Base):
         self.status = status
         self.type = type
         self.unit = unit
+        self.longitude = longitude
+        self.latitude = latitude

@@ -26,7 +26,7 @@ def post_forest_area():
         request.json.get('forestation_types')
     )
     id = forestries.create_forest_area(xforestarea)
-    return str(id), 200
+    return {"id": str(id)}, 200
 
 
 @forestries_controller.route("/forestries", methods=['POST'])
@@ -37,7 +37,7 @@ def post_forestry():
         request.json.get('surface')
     )
     id = forestries.create_forestry(xforestry)
-    return str(id), 200
+    return {"id": str(id)}, 200
 
 
 @forestries_controller.route("/forestries", methods=['GET'])
