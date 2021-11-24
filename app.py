@@ -3,6 +3,7 @@ from Model.ForestryManager.ForestriesRESTController import forestries_controller
 from Model.SensorsManager.SensorRESTController import sensors_controller
 from Model.SensorMeasurementManager.SensorMeasurementRESTController import sensor_measurement_controller
 from Model.EmergencyNotificationManager.EmergencyNotificationRESTController import emergency_notification_controller
+from Utils.APIException import APIException
 from conf import AUTH_PASS, AUTH_LOGIN
 
 app = Flask(__name__)
@@ -32,6 +33,11 @@ def after_request_func(response):
     response.headers.add('Access-Control-Allow-Headers', '*')
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
+
+
+@app.errorhandler(APIException)
+def all_exception_handler(error):
+    return {"message": error.message}, error.status
 
 
 if __name__ == "__main__":
