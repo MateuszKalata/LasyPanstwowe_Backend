@@ -1,7 +1,6 @@
 from flask import Blueprint, request
 from Model.SensorMeasurementManager.SensorMeasurementManager import SensorMeasurementManager
 from DTO.XSensorMeasurement import XSensorMeasurement
-from flask import jsonify
 
 sensor_measurement_controller = Blueprint('SensorMeasurementRESTController', __name__)
 sensor_manager = SensorMeasurementManager()
