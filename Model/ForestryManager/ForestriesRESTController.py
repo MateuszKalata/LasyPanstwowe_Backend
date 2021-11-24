@@ -25,6 +25,17 @@ def post_forest_area():
         request.json.get('surface'),
         request.json.get('forestation_types')
     )
+    xforestry = forestries.get_forestry(xforestarea.id)
+    if xforestry == 1:
+        return {"message", "forestry doesn't exist!"}, 422
+    if sum([float(xfa.surface) for xfa in xforestry.xforestareas]) + float(xforestarea.surface) > float(xforestry.xforestry.surface):
+        return {"message", "forest areas' total surface would exceed forestry area!"}, 422
+    if len(xforestarea.name) < 1:
+        return {"message", "forestryarea name is empty!"}, 422
+    if not xforestarea.surface.isnumeric():
+        return {"message", "forestryarea surface must be a number!"}, 422
+    if float(xforestarea.surface) > 10000:
+        return {"message", "forestryarea can't be larger than 10000!"}, 422
     id = forestries.create_forest_area(xforestarea)
     return {"id": str(id)}, 200
 
@@ -36,6 +47,12 @@ def post_forestry():
         request.json.get('name'),
         request.json.get('surface')
     )
+    if len(xforestry.name) < 1:
+        return {"message", "forestry name is empty!"}, 422
+    if not xforestry.surface.isnumeric():
+        return {"message", "forestry surface must be a number!"}, 422
+    if float(xforestry.surface) > 10000:
+        return {"message", "forestry can't be larger than 10000!"}, 422
     id = forestries.create_forestry(xforestry)
     return {"id": str(id)}, 200
 
@@ -51,7 +68,7 @@ def send_forestries():
 def send_forestry(id):
     xforestry = forestries.get_forestry(id)
     if xforestry == 1:
-        return "not found", 404
+        return {"message", "forestry doesn't exist!"}, 422
     return jsonify(xforestry.as_dict()), 200
 
 
