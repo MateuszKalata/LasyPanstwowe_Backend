@@ -5,6 +5,9 @@ from Data.SensorRepository.SensorRepositoryImpl import SensorRepositoryImpl
 
 class SensorManager(ISensors,ISensorsRegistration):
 
+    allowedTypes = ["fire","humidity","rain","wind","temperature","camera","camera_trap"]
+    allowedUnits = ["","%","K","°C","°F","C","F","bool","m/s","km/h","mm"]
+
     def __init__(self):
         self.sensorRepository = SensorRepositoryImpl()
 
@@ -21,6 +24,10 @@ class SensorManager(ISensors,ISensorsRegistration):
         return self.sensorRepository.readNotAssigned()
 
     def RegisterSensor(self, sensor):
+        if (sensor.type not in self.allowedTypes):
+            return -1
+        if (sensor.unit not in self.allowedUnits):
+            return -2
         return self.sensorRepository.create(sensor)
 
     def ActivateSensor(self, id):

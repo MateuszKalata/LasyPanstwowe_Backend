@@ -10,8 +10,6 @@ from conf import DATABASE_URL
 
 class SensorRepositoryImpl(ISensorRepository):
 
-    allowedTypes = ["fire","humidity","rain","wind","temperature","camera","camera_trap"]
-    allowedUnits = ["","%","K","°C","°F","C","F","bool","m/s","km/h","mm"]
     def __init__(self):
         self.sensorMapper = SensorMapper()
         self.engine = create_engine(DATABASE_URL)
@@ -20,11 +18,6 @@ class SensorRepositoryImpl(ISensorRepository):
 
     def create(self, xSensor):
         #test do sprawdzenia czy taki rodzaj czujnika jest akceptowalny
-        if (xSensor.type not in self.allowedTypes):
-            return -1
-        if (xSensor.unit not in self.allowedUnits):
-            return -2
-
         session = self.Session()       
         sensorEntity = self.sensorMapper.convertXSensorToSensorEntity(xSensor)
         session.add(sensorEntity)
