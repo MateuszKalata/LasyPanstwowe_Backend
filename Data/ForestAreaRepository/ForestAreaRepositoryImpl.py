@@ -5,14 +5,14 @@ from Data.ForestAreaRepository.ForestAreaMapper import ForestAreaMapper
 from Data.ForestAreaRepository.IForestAreaRepository import IForestAreaRepository
 from Entities.ForestAreaEntity import ForestAreaEntity
 from Entities.ForestationTypeEntity import ForestationTypeEntity
-from conf import DB_URI
+from conf import DATABASE_URL
 
 
 class ForestAreaRepositoryImpl(IForestAreaRepository):
 
     def __init__(self):
         self.forest_area_mapper = ForestAreaMapper()
-        self.engine = create_engine(DB_URI)
+        self.engine = create_engine(DATABASE_URL)
         self.Session = sessionmaker(bind=self.engine)
         ForestAreaEntity.metadata.create_all(bind=self.engine)
         ForestationTypeEntity.metadata.create_all(bind=self.engine)
@@ -34,7 +34,7 @@ class ForestAreaRepositoryImpl(IForestAreaRepository):
         ]
         session.commit()
         session.close()
-        return 0
+        return forest_area_id
 
     def read(self, id):
         session = self.Session()
