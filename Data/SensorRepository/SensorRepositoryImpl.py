@@ -17,7 +17,6 @@ class SensorRepositoryImpl(ISensorRepository):
         SensorEntity.metadata.create_all(bind=self.engine)
 
     def create(self, xSensor):
-        #test do sprawdzenia czy taki rodzaj czujnika jest akceptowalny
         session = self.Session()       
         sensorEntity = self.sensorMapper.convertXSensorToSensorEntity(xSensor)
         session.add(sensorEntity)
