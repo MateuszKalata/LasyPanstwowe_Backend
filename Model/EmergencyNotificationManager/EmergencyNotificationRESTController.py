@@ -33,6 +33,6 @@ def mark_emergency_as_resolved(id):
 @emergency_notification_controller.route("/emergencynotifications", methods=['POST'])
 def report_emergency():
     x_emergency_notification = emergency_notification_json_mapper.json_to_dto(request.json)
-    emergency_notifications.report_emergency(x_emergency_notification)
-    return jsonify({"message": "success"}), 200
+    emergency_id = emergency_notifications.report_emergency(x_emergency_notification)
+    return jsonify({"emergency_id": emergency_id}), 200
 

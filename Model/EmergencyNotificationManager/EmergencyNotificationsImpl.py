@@ -15,8 +15,8 @@ class EmergencyNotificationImpl(IEmergencyNotification, IEmergencyReporting):
         return self.emergency_notification_repository.read_all()
 
     def mark_emergency_as_resolved(self, id):
-        self.emergency_notification_repository.update(id, {"status": 1})
+        self.emergency_notification_repository.update(id, {"status": 0})
 
     def report_emergency(self, x_emergency_notification_details):
-        return self.report_emergency(x_emergency_notification_details)
+        return self.emergency_notification_repository.create(x_emergency_notification_details)
 

@@ -21,7 +21,7 @@ class EmergencyNotificationRepositoryImpl(IEmergencyNotificationRepository):
         emergency_notification_entity = self.emergency_notification_mapper.dto_to_entity(x_emergency_notification)
         session.add(emergency_notification_entity)
         session.commit()
-        emergency_notification_entity_id = emergency_notification_entity.id
+        emergency_notification_entity_id = emergency_notification_entity.emergency_id
         session.close()
         return emergency_notification_entity_id
 
@@ -46,6 +46,11 @@ class EmergencyNotificationRepositoryImpl(IEmergencyNotificationRepository):
 
     def update(self, id, data):
         session = self.Session()
-        session.query().filter(EmergencyNotificationEntity.emergency_id == id).update(data)
+        try:
+            emergency_notification_entitity = \
+                session.query(EmergencyNotificationEntity).filter(EmergencyNotificationEntity.emergency_id == id).one()
+        except sqlalchemy.exc.NoResultFound:
+            raise APIException(f"Emergency notification with id={id} doesn't exist", 422)
+        emergency_notification_entitity.emergency_status = 0
         session.commit()
         session.close()
