@@ -4,6 +4,7 @@ from sqlalchemy.orm import sessionmaker
 from Data.ForestryRepository.ForestryMapper import ForestryMapper
 from Data.ForestryRepository.IForestryRepository import IForestryRepository
 from Entities.ForestryEntity import ForestryEntity
+from Utils.APIException import APIException
 from conf import DATABASE_URL
 
 
@@ -29,7 +30,7 @@ class ForestryRepositoryImpl(IForestryRepository):
         try:
             forestry_entity = session.query(ForestryEntity).filter(ForestryEntity.id == id).one()
         except sqlalchemy.exc.NoResultFound:
-            return 1
+            raise APIException(f"Forestry with id={id} doesn't exist", 422)
         session.close()
         xforestry = self.forestry_mapper.convert_forestry_entity_to_xforestry(forestry_entity)
         return xforestry

@@ -18,11 +18,11 @@ class EmergencyNotificationJSONMapper:
         sensor_id = json.get("sensor_id")
         emergency_type = json.get("emergency_type")
         if not emergency_status:
-            return APIException("Emergency status must not be empty!", 422)
+            raise APIException("Emergency status must not be empty!", 422)
         if not sensor_id:
-            return APIException("Sensor id must not be empty!", 422)
+            raise APIException("Sensor id must not be empty!", 422)
         if not emergency_type:
-            return APIException("Emergency type must not be empty!", 422)
+            raise APIException("Emergency type must not be empty!", 422)
         return XEmergencyNotification(
             emergency_id,
             emergency_status,
