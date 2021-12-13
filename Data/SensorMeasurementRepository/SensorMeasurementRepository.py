@@ -28,13 +28,15 @@ class SensorMeasurementRepository(ISensorMeasurementRepository):
         session = self.Session()
         sensor_measurements = session.query(SensorMeasurementEntity).all()
         session.close()
-        return sensor_measurements
+        xsensormeasurements = map(self.sensor_measurement_mapper.convert_sensor_measurement_entity_to_xsensormeasurement, sensor_measurements)
+        return xsensormeasurements
 
     def read_id(self, id):
         session = self.Session()
         try:
-            sensor_measurements = session.query(SensorMeasurementEntity).filter(SensorMeasurementRepository == id)
+            sensor_measurements = session.query(SensorMeasurementEntity).filter(SensorMeasurementEntity.sensor_id == id)
         except sqlalchemy.exc.NoResultFound:
             return 1
         session.close()
-        return sensor_measurements
+        xsensormeasurements = map(self.sensor_measurement_mapper.convert_sensor_measurement_entity_to_xsensormeasurement, sensor_measurements)
+        return xsensormeasurements
