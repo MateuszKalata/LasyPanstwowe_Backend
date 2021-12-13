@@ -22,8 +22,6 @@ class ForestriesImpl(IForestries, IForestAreas):
 
     def get_forestry(self, id):
         xforestry = self.forestry_repository.read(id)
-        if xforestry == 1:
-            return 1
         xforestareas = self.get_forest_areas(xforestry.id)
         return XForestryDetails(xforestry, xforestareas)
 
