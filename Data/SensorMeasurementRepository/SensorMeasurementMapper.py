@@ -11,7 +11,8 @@ class SensorMeasurementMapper:
             sensor_measurement_entity.sensor_name,
             sensor_measurement_entity.value,
             sensor_measurement_entity.unit,
-            sensor_measurement_entity.date
+            sensor_measurement_entity.date,
+            sensor_measurement_entity.is_critical
         )
 
     def convert_xsensormeasurement_to_sensor_measurement_entity(self, xsensormeasurement):
@@ -21,5 +22,6 @@ class SensorMeasurementMapper:
             xsensormeasurement.sensor_name,
             xsensormeasurement.value,
             xsensormeasurement.unit,
-            xsensormeasurement.date
+            xsensormeasurement.date,
+            xsensormeasurement.is_critical
         )
