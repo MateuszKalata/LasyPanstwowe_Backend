@@ -9,7 +9,9 @@ class EmergencyNotificationMapper:
             emergency_notification_entity.emergency_id,
             emergency_notification_entity.emergency_status,
             emergency_notification_entity.sensor_id,
-            emergency_notification_entity.emergency_type
+            emergency_notification_entity.emergency_type,
+            emergency_notification_entity.emergency_timestamp,
+            emergency_notification_entity.emergency_value
         )
 
     def dto_to_entity(self, x_emergency_notification):
@@ -17,5 +19,7 @@ class EmergencyNotificationMapper:
             x_emergency_notification.emergency_id,
             x_emergency_notification.emergency_status,
             x_emergency_notification.sensor_id,
-            x_emergency_notification.emergency_type
+            x_emergency_notification.emergency_type,
+            x_emergency_notification.emergency_timestamp,
+            x_emergency_notification.emergency_value
         )

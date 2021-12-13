@@ -1,6 +1,7 @@
 from Model.EmergencyNotificationManager.IEmergencyNotification import IEmergencyNotification
 from Model.EmergencyNotificationManager.IEmergencyReporting import IEmergencyReporting
 from Data.EmergencyNotificationRepository.EmergencyNotificationRepositoryImpl import EmergencyNotificationRepositoryImpl
+from Utils.APIException import APIException
 
 
 class EmergencyNotificationImpl(IEmergencyNotification, IEmergencyReporting):
