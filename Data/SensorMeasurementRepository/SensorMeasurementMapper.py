@@ -8,20 +8,14 @@ class SensorMeasurementMapper:
         return XSensorMeasurement(
             sensor_measurement_entity.id,
             sensor_measurement_entity.sensor_id,
-            sensor_measurement_entity.sensor_name,
+            sensor_measurement_entity.timestamp,
             sensor_measurement_entity.value,
-            sensor_measurement_entity.unit,
-            sensor_measurement_entity.date,
-            sensor_measurement_entity.is_critical
         )
 
     def convert_xsensormeasurement_to_sensor_measurement_entity(self, xsensormeasurement):
         return SensorMeasurementEntity(
             xsensormeasurement.id,
             xsensormeasurement.sensor_id,
-            xsensormeasurement.sensor_name,
+            xsensormeasurement.timestamp,
             xsensormeasurement.value,
-            xsensormeasurement.unit,
-            xsensormeasurement.date,
-            xsensormeasurement.is_critical
         )
