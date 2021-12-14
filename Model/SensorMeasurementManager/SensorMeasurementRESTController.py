@@ -12,11 +12,8 @@ def add_measurement():
     xmeasurement = XSensorMeasurement(
         None,
         request.json.get('sensor_id'),
-        request.json.get('sensor_name'),
+        request.json.get('timestamp'),
         request.json.get('value'),
-        request.json.get('unit'),
-        request.json.get('date'),
-        request.json.get('is_critical')
     )
     id = sensor_manager.report_measurement(xmeasurement)
     return {"id": str(id)}, 200
