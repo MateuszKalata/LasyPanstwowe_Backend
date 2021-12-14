@@ -7,7 +7,8 @@ Base = declarative_base()
 class EmergencyNotificationEntity(Base):
     __tablename__ = 'emergency_notifications'
 
-    emergency_id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True)
+    emergency_id = Column(Integer)
     emergency_status = Column(Integer)
     sensor_id = Column(Integer)
     emergency_type = Column(Integer)

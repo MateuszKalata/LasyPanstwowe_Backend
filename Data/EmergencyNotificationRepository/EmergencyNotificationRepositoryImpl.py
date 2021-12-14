@@ -1,6 +1,7 @@
 import sqlalchemy.exc
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy.sql import func
 from Data.EmergencyNotificationRepository.EmergencyNotificationMapper import EmergencyNotificationMapper
 from Data.EmergencyNotificationRepository.IEmergencyNotificationRepository import IEmergencyNotificationRepository
 from Entities.EmergencyNotificationEntity import EmergencyNotificationEntity
@@ -18,39 +19,46 @@ class EmergencyNotificationRepositoryImpl(IEmergencyNotificationRepository):
 
     def create(self, x_emergency_notification):
         session = self.Session()
-        emergency_notification_entity = self.emergency_notification_mapper.dto_to_entity(x_emergency_notification)
-        session.add(emergency_notification_entity)
+        try:
+            new_id = session.query(func.max(EmergencyNotificationEntity.emergency_id)).one()[0] + 1
+        except Exception:
+            new_id = 1
+        x_emergency_notification.emergency_id = new_id
+        emergency_notification_entities = self.emergency_notification_mapper.dto_to_entity(x_emergency_notification)
+        for x in emergency_notification_entities:
+            session.add(x)
         session.commit()
-        emergency_notification_entity_id = emergency_notification_entity.emergency_id
+        emergency_notification_entity_id = emergency_notification_entities[0].emergency_id
         session.close()
         return emergency_notification_entity_id
 
     def read(self, id):
         session = self.Session()
         try:
-            emergency_notification_entitity = \
-                session.query(EmergencyNotificationEntity).filter(EmergencyNotificationEntity.emergency_id == id).one()
+            emergency_notification_entities = \
+                session.query(EmergencyNotificationEntity).filter(EmergencyNotificationEntity.emergency_id == id).all()
         except sqlalchemy.exc.NoResultFound:
             raise APIException(f"Emergency notification with id={id} doesn't exist", 422)
         session.close()
-        x_emergency_notification = self.emergency_notification_mapper.entity_to_dto(emergency_notification_entitity)
+        x_emergency_notification = self.emergency_notification_mapper.entity_to_dto(emergency_notification_entities)
         return x_emergency_notification
 
     def read_all(self):
         session = self.Session()
-        emergency_notification_entities = session.query(EmergencyNotificationEntity).all()
+        x_emergency_notifications = []
+        for value in session.query(EmergencyNotificationEntity.emergency_id).distinct():
+            x_emergency_notifications.append(self.read(value[0]))
         session.close()
-        x_emergency_notifications = \
-            map(self.emergency_notification_mapper.entity_to_dto, emergency_notification_entities)
         return x_emergency_notifications
 
     def update(self, id, data):
         session = self.Session()
         try:
             emergency_notification_entitity = \
-                session.query(EmergencyNotificationEntity).filter(EmergencyNotificationEntity.emergency_id == id).one()
+                session.query(EmergencyNotificationEntity).filter(EmergencyNotificationEntity.emergency_id == id).all()
         except sqlalchemy.exc.NoResultFound:
             raise APIException(f"Emergency notification with id={id} doesn't exist", 422)
-        emergency_notification_entitity.emergency_status = 0
+        for x in emergency_notification_entitity:
+            x.emergency_status = 0
         session.commit()
         session.close()
