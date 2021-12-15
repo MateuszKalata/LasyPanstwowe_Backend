@@ -15,9 +15,6 @@ class EmergencyNotificationJSONMapper:
         }
 
     def json_to_dto(self, json):
-        if len(json.get("sensor_measurements")) < 3:
-            raise APIException(
-                "There have to be at leat 3 sensor measurements!", 422)
 
         emergency_id = json.get("emergency_id")
         sensor_id = json.get("sensor_id")
