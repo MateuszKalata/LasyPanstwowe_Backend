@@ -1,9 +1,8 @@
 from flask import Blueprint, request
+from flask import jsonify
 
 from Model.EmergencyNotificationManager.EmergencyNotificationJSONMapper import EmergencyNotificationJSONMapper
 from Model.EmergencyNotificationManager.EmergencyNotificationsImpl import EmergencyNotificationImpl
-from flask import jsonify
-
 
 emergency_notification_controller = Blueprint('EmergencyNotificationRESTController', __name__)
 emergency_notifications = EmergencyNotificationImpl()
@@ -35,4 +34,3 @@ def report_emergency():
     x_emergency_notification = emergency_notification_json_mapper.json_to_dto(request.json)
     id = emergency_notifications.report_emergency(x_emergency_notification)
     return jsonify({"emergency_id": id}), 200
-

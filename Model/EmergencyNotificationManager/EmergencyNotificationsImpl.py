@@ -1,7 +1,7 @@
+from Data.EmergencyNotificationRepository.EmergencyNotificationRepositoryImpl import EmergencyNotificationRepositoryImpl
 from Data.SensorRepository.SensorRepositoryImpl import SensorRepositoryImpl
 from Model.EmergencyNotificationManager.IEmergencyNotification import IEmergencyNotification
 from Model.EmergencyNotificationManager.IEmergencyReporting import IEmergencyReporting
-from Data.EmergencyNotificationRepository.EmergencyNotificationRepositoryImpl import EmergencyNotificationRepositoryImpl
 from Utils.APIException import APIException
 
 
@@ -24,4 +24,3 @@ class EmergencyNotificationImpl(IEmergencyNotification, IEmergencyReporting):
         if self.sensor_repository.read(x_emergency_notification_details.sensor_id) == 1:
             raise APIException(f"Sensor with id={x_emergency_notification_details.sensor_id} doesn't exist!", 422)
         return self.emergency_notification_repository.create(x_emergency_notification_details)
-

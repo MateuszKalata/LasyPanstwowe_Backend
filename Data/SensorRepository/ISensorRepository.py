@@ -1,19 +1,20 @@
 from abc import ABC, abstractmethod
 
+
 class ISensorRepository(ABC):
 
     @abstractmethod
-    def create(self, sensorEntity, db):
+    def create(self, sensorEntity):
         pass
 
     @abstractmethod
-    def read(self, id, db):
+    def read(self, id):
         pass
 
     @abstractmethod
-    def readAll(self, db):
+    def readAll(self):
         pass
 
     @abstractmethod
-    def update(self, SensorEntity, db):
+    def update(self, SensorEntity):
         pass

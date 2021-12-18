@@ -1,8 +1,8 @@
-from Model.ForestryManager.IForestires import IForestries
-from Model.ForestryManager.IForestAreas import IForestAreas
-from Data.ForestryRepository.ForestryRepositoryImpl import ForestryRepositoryImpl
-from Data.ForestAreaRepository.ForestAreaRepositoryImpl import ForestAreaRepositoryImpl
 from DTO.XForestryDetails import XForestryDetails
+from Data.ForestAreaRepository.ForestAreaRepositoryImpl import ForestAreaRepositoryImpl
+from Data.ForestryRepository.ForestryRepositoryImpl import ForestryRepositoryImpl
+from Model.ForestryManager.IForestAreas import IForestAreas
+from Model.ForestryManager.IForestires import IForestries
 
 
 class ForestriesImpl(IForestries, IForestAreas):

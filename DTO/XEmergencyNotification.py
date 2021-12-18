@@ -1,7 +1,7 @@
 class XEmergencyNotification:
-    def __init__(self, emergency_id, emergency_status, sensor_id, emergency_type, measurements):
-        self.emergency_id = emergency_id
-        self.emergency_status = emergency_status
+    def __init__(self, id, status, sensor_id, type, measurements):
+        self.id = id
+        self.status = status
         self.sensor_id = sensor_id
-        self.emergency_type = emergency_type
+        self.type = type
         self.measurements = measurements

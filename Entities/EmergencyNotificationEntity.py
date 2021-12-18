@@ -1,24 +1,22 @@
-from sqlalchemy.orm import declarative_base
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy.orm import relationship
 
-Base = declarative_base()
+from conf import Base
 
 
 class EmergencyNotificationEntity(Base):
     __tablename__ = 'emergency_notifications'
 
     id = Column(Integer, primary_key=True)
-    emergency_id = Column(Integer)
-    emergency_status = Column(Integer)
-    sensor_id = Column(Integer)
-    emergency_type = Column(Integer)
-    emergency_timestamp = Column(String(50))
-    emergency_value = Column(Integer)
+    status = Column(Integer)
+    type = Column(Integer)
 
-    def __init__(self, emergency_id, emergency_status, sensor_id, emergency_type, emergency_timestamp, emergency_value):
-        self.emergency_id = emergency_id
-        self.emergency_status = emergency_status
+    sensor_id = Column(Integer, ForeignKey('sensor.id'))
+    sensor = relationship("SensorEntity", back_populates="emergency_notifications")
+    sensor_measurements = relationship("SensorMeasurementEntity", back_populates="emergency_notification")
+
+    def __init__(self, id, status, sensor_id, type):
+        self.id = id
+        self.status = status
         self.sensor_id = sensor_id
-        self.emergency_type = emergency_type
-        self.emergency_timestamp = emergency_timestamp
-        self.emergency_value = emergency_value
+        self.type = type
