@@ -33,4 +33,4 @@ def mark_emergency_as_resolved(id):
 def report_emergency():
     x_emergency_notification = emergency_notification_json_mapper.json_to_dto(request.json)
     id = emergency_notifications.report_emergency(x_emergency_notification)
-    return jsonify({"emergency_id": id}), 200
+    return jsonify({"emergency_id": id}), 201

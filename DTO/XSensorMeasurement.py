@@ -10,6 +10,6 @@ class XSensorMeasurement:
         return {
             "id": self.id,
             "sensor_id": self.sensor_id,
-            "sensor_name": self.timestamp,
+            "timestamp": self.timestamp,
             "value": self.value,
         }

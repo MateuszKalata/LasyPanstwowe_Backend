@@ -21,7 +21,7 @@ class EmergencyNotificationRepositoryImpl(IEmergencyNotificationRepository):
             for x_sensor_measurement in x_emergency_notification.measurements
         ]
         if len(measurements) < 3:
-            raise APIException(f"Emergency situation requires at least 3 measurements", 422)
+            raise APIException(f"Emergency situation requires at least 3 measurements", 400)
         emergency_notification = self.emergency_notification_mapper.dto_to_entity(x_emergency_notification)
         emergency_notification.sensor_measurements = measurements
         session.add(emergency_notification)
