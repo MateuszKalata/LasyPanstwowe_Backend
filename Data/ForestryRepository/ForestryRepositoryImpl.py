@@ -1,23 +1,19 @@
 import sqlalchemy.exc
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+
 from Data.ForestryRepository.ForestryMapper import ForestryMapper
 from Data.ForestryRepository.IForestryRepository import IForestryRepository
 from Entities.ForestryEntity import ForestryEntity
 from Utils.APIException import APIException
-from conf import DATABASE_URL
+from db_helper import Session
 
 
 class ForestryRepositoryImpl(IForestryRepository):
 
     def __init__(self):
         self.forestry_mapper = ForestryMapper()
-        self.engine = create_engine(DATABASE_URL)
-        self.Session = sessionmaker(bind=self.engine)
-        ForestryEntity.metadata.create_all(bind=self.engine)
 
     def create(self, xforestry):
-        session = self.Session()
+        session = Session()
         forestry_entity = self.forestry_mapper.convert_xforestry_to_forestry_entity(xforestry)
         session.add(forestry_entity)
         session.commit()
@@ -26,7 +22,7 @@ class ForestryRepositoryImpl(IForestryRepository):
         return forestry_entity_id
 
     def read(self, id):
-        session = self.Session()
+        session = Session()
         try:
             forestry_entity = session.query(ForestryEntity).filter(ForestryEntity.id == id).one()
         except sqlalchemy.exc.NoResultFound:
@@ -36,7 +32,7 @@ class ForestryRepositoryImpl(IForestryRepository):
         return xforestry
 
     def read_all(self):
-        session = self.Session()
+        session = Session()
         forestry_entities = session.query(ForestryEntity).all()
         session.close()
         xforestries = map(self.forestry_mapper.convert_forestry_entity_to_xforestry, forestry_entities)

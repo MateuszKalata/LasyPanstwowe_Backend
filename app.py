@@ -1,11 +1,17 @@
 from flask import Flask, request, make_response
-from Model.ForestryManager.ForestriesRESTController import forestries_controller
-from Model.SensorsManager.SensorRESTController import sensors_controller
-from Model.SensorMeasurementManager.SensorMeasurementRESTController import sensor_measurement_controller
+
+from Entities.EmergencyNotificationEntity import EmergencyNotificationEntity
+from Entities.ForestAreaEntity import ForestAreaEntity
+from Entities.ForestationTypeEntity import ForestationTypeEntity
+from Entities.ForestryEntity import ForestryEntity
+from Entities.SensorEntity import SensorEntity
+from Entities.SensorMeasurementEntity import SensorMeasurementEntity
 from Model.EmergencyNotificationManager.EmergencyNotificationRESTController import emergency_notification_controller
+from Model.ForestryManager.ForestriesRESTController import forestries_controller
+from Model.SensorMeasurementManager.SensorMeasurementRESTController import sensor_measurement_controller
+from Model.SensorsManager.SensorRESTController import sensors_controller
 from Utils.APIException import APIException
 from conf import AUTH_PASS, AUTH_LOGIN
-from flask_cors import CORS
 
 app = Flask(__name__)
 app.register_blueprint(forestries_controller)

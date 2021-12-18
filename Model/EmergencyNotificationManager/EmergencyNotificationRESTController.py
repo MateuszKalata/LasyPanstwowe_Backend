@@ -1,9 +1,8 @@
 from flask import Blueprint, request
+from flask import jsonify
 
 from Model.EmergencyNotificationManager.EmergencyNotificationJSONMapper import EmergencyNotificationJSONMapper
 from Model.EmergencyNotificationManager.EmergencyNotificationsImpl import EmergencyNotificationImpl
-from flask import jsonify
-
 
 emergency_notification_controller = Blueprint('EmergencyNotificationRESTController', __name__)
 emergency_notifications = EmergencyNotificationImpl()
@@ -32,10 +31,6 @@ def mark_emergency_as_resolved(id):
 
 @emergency_notification_controller.route("/emergencynotifications", methods=['POST'])
 def report_emergency():
-    x_emergency_notification_list = emergency_notification_json_mapper.json_to_dto(request.json)
-    index_arr = []
-    for x_emergency_notification in x_emergency_notification_list:
-       index = emergency_notifications.report_emergency(x_emergency_notification)
-       index_arr.append(index)
-    return jsonify({"emergency_ids": index_arr}), 200
-
+    x_emergency_notification = emergency_notification_json_mapper.json_to_dto(request.json)
+    id = emergency_notifications.report_emergency(x_emergency_notification)
+    return jsonify({"emergency_id": id}), 200
