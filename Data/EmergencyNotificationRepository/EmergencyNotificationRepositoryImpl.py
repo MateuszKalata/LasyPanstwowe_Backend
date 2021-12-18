@@ -5,7 +5,7 @@ from Data.EmergencyNotificationRepository.IEmergencyNotificationRepository impor
 from Data.SensorMeasurementRepository.SensorMeasurementMapper import SensorMeasurementMapper
 from Entities.EmergencyNotificationEntity import EmergencyNotificationEntity
 from Utils.APIException import APIException
-from db_helper import Session
+from Utils.DBhelper import Session
 
 
 class EmergencyNotificationRepositoryImpl(IEmergencyNotificationRepository):

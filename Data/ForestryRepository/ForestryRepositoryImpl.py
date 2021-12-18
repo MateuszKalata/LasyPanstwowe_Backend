@@ -4,7 +4,7 @@ from Data.ForestryRepository.ForestryMapper import ForestryMapper
 from Data.ForestryRepository.IForestryRepository import IForestryRepository
 from Entities.ForestryEntity import ForestryEntity
 from Utils.APIException import APIException
-from db_helper import Session
+from Utils.DBhelper import Session
 
 
 class ForestryRepositoryImpl(IForestryRepository):

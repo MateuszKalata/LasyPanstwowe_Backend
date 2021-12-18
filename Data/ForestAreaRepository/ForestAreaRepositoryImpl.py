@@ -4,7 +4,7 @@ from Data.ForestAreaRepository.ForestAreaMapper import ForestAreaMapper
 from Data.ForestAreaRepository.IForestAreaRepository import IForestAreaRepository
 from Entities.ForestAreaEntity import ForestAreaEntity
 from Entities.ForestationTypeEntity import ForestationTypeEntity
-from db_helper import Session
+from Utils.DBhelper import Session
 
 
 class ForestAreaRepositoryImpl(IForestAreaRepository):

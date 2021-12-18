@@ -3,7 +3,7 @@ import sqlalchemy.exc
 from Data.SensorMeasurementRepository.ISensorMeasurementRepository import ISensorMeasurementRepository
 from Data.SensorMeasurementRepository.SensorMeasurementMapper import SensorMeasurementMapper
 from Entities.SensorMeasurementEntity import SensorMeasurementEntity
-from db_helper import Session
+from Utils.DBhelper import Session
 
 
 class SensorMeasurementRepository(ISensorMeasurementRepository):
