@@ -5,16 +5,17 @@ from Utils.APIException import APIException
 
 class EmergencyNotificationJSONMapper:
 
-    def dto_to_json(self, x_emergency_notification):
+    def dto_to_json(self, x_emergency_notification: XEmergencyNotification):
         return {
             "emergency_id": x_emergency_notification.id,
             "emergency_status": x_emergency_notification.status,
-            "sensor_id": x_emergency_notification.sensor_id,
             "emergency_type": x_emergency_notification.type,
-            "measurements": [{
-                "timestamp": measurement.timestamp,
-                "value": measurement.value
-            } for measurement in x_emergency_notification.measurements]
+            "measurements": [measurement.as_dict()
+                             for measurement in x_emergency_notification.measurements],
+            "forestry_name": x_emergency_notification.forestry_name,
+            "forest_area_name": x_emergency_notification.forest_area_name,
+            "sensor": x_emergency_notification.sensor.as_dict(),
+            "timestamp": x_emergency_notification.timestamp
         }
 
     def json_to_dto(self, json):
@@ -35,6 +36,7 @@ class EmergencyNotificationJSONMapper:
             status,
             sensor_id,
             type,
+            None,
             [XSensorMeasurement(
                 None,
                 sensor_id,

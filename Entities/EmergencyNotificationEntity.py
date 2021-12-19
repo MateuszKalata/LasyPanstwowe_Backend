@@ -2,6 +2,7 @@ from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
 
 from conf import Base
+from datetime import datetime
 
 
 class EmergencyNotificationEntity(Base):
@@ -10,6 +11,7 @@ class EmergencyNotificationEntity(Base):
     id = Column(Integer, primary_key=True)
     status = Column(Integer)
     type = Column(Integer)
+    timestamp = Column(String(200))
 
     sensor_id = Column(Integer, ForeignKey('sensor.id'))
     sensor = relationship("SensorEntity", back_populates="emergency_notifications")
@@ -20,3 +22,4 @@ class EmergencyNotificationEntity(Base):
         self.status = status
         self.sensor_id = sensor_id
         self.type = type
+        self.timestamp = datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%f%z')

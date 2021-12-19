@@ -9,7 +9,6 @@ from Entities.SensorEntity import SensorEntity
 from Entities.SensorMeasurementEntity import SensorMeasurementEntity
 from conf import DATABASE_URL
 
-
 engine = create_engine(DATABASE_URL)
 Session = sessionmaker(bind=engine)
 SensorMeasurementEntity.metadata.create_all(bind=engine)
