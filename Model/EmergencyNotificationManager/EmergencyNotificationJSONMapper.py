@@ -21,9 +21,7 @@ class EmergencyNotificationJSONMapper:
 
         id = None
         sensor_id = json.get("sensor_id")
-        status = json.get("emergency_status")
-        if not status:
-            raise APIException("Emergency status must not be empty!", 422)
+        status = json.get("emergency_status", 1)
         if not sensor_id:
             raise APIException("Sensor id must not be empty!", 422)
 
