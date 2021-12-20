@@ -9,7 +9,6 @@ class EmergencyNotificationJSONMapper:
         return {
             "emergency_id": x_emergency_notification.id,
             "emergency_status": x_emergency_notification.status,
-            "emergency_type": x_emergency_notification.type,
             "measurements": [measurement.as_dict()
                              for measurement in x_emergency_notification.measurements],
             "forestry_name": x_emergency_notification.forestry_name,
@@ -22,20 +21,17 @@ class EmergencyNotificationJSONMapper:
 
         id = None
         sensor_id = json.get("sensor_id")
-        type = json.get("emergency_type")
         status = json.get("emergency_status")
         if not status:
             raise APIException("Emergency status must not be empty!", 422)
         if not sensor_id:
             raise APIException("Sensor id must not be empty!", 422)
-        if not type:
-            raise APIException("Emergency type must not be empty!", 422)
 
         return XEmergencyNotification(
             id,
             status,
             sensor_id,
-            type,
+            0,
             None,
             [XSensorMeasurement(
                 None,
