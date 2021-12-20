@@ -21,8 +21,6 @@ def add_measurement():
         return "Invalid and/or missing measurement data", 400
 
     sensor = sensor_manager.GetSensor(xmeasurement.sensor_id)
-    print("sensor:")
-    print(sensor)
     if sensor == 1:
         return "There is no sensor with id " + str(xmeasurement.sensor_id) + ".", 404
     id = sensor_measurements_manager.report_measurement(xmeasurement)
