@@ -1,25 +1,23 @@
-from sqlalchemy import Column, Integer, String, ForeignKey
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import declarative_base
+from sqlalchemy import Column, Integer, String
 
-from conf import Base
-from datetime import datetime
+Base = declarative_base()
 
 
 class EmergencyNotificationEntity(Base):
     __tablename__ = 'emergency_notifications'
 
-    id = Column(Integer, primary_key=True)
-    status = Column(Integer)
-    type = Column(Integer)
-    timestamp = Column(String(200))
+    emergency_id = Column(Integer, primary_key=True)
+    emergency_status = Column(Integer)
+    sensor_id = Column(Integer)
+    emergency_type = Column(Integer)
+    emergency_timestamp = Column(String(50))
+    emergency_value = Column(Integer)
 
-    sensor_id = Column(Integer, ForeignKey('sensor.id'))
-    sensor = relationship("SensorEntity", back_populates="emergency_notifications")
-    sensor_measurements = relationship("SensorMeasurementEntity", back_populates="emergency_notification")
-
-    def __init__(self, id, status, sensor_id, type):
-        self.id = id
-        self.status = status
+    def __init__(self, emergency_id, emergency_status, sensor_id, emergency_type, emergency_timestamp, emergency_value):
+        self.emergency_id = emergency_id
+        self.emergency_status = emergency_status
         self.sensor_id = sensor_id
-        self.type = type
-        self.timestamp = datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%f%z')
+        self.emergency_type = emergency_type
+        self.emergency_timestamp = emergency_timestamp
+        self.emergency_value = emergency_value

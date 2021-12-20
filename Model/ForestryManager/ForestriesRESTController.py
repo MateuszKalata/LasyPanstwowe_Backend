@@ -1,9 +1,9 @@
 from flask import Blueprint, request
+from Model.ForestryManager.ForestriesImpl import ForestriesImpl
+from DTO.XForestry import XForestry
+from DTO.XForestArea import XForestArea
 from flask import jsonify
 
-from DTO.XForestArea import XForestArea
-from DTO.XForestry import XForestry
-from Model.ForestryManager.ForestriesImpl import ForestriesImpl
 from Utils.APIException import APIException
 
 forestries_controller = Blueprint('ForestriesRESTController', __name__)
@@ -26,8 +26,7 @@ def post_forest_area():
         request.json.get('forestation_types')
     )
     xforestry = forestries.get_forestry(xforestarea.forestry_id)
-    if sum([float(xfa.surface) for xfa in xforestry.xforestareas]) + float(xforestarea.surface) > float(
-            xforestry.xforestry.surface):
+    if sum([float(xfa.surface) for xfa in xforestry.xforestareas]) + float(xforestarea.surface) > float(xforestry.xforestry.surface):
         raise APIException(f"forest areas' total surface would exceed forestry area!", 422)
     if len(xforestarea.name) < 1:
         raise APIException(f"forestryarea name is empty!", 422)
@@ -67,3 +66,5 @@ def send_forestries():
 def send_forestry(id):
     xforestry = forestries.get_forestry(id)
     return jsonify(xforestry.as_dict()), 200
+
+

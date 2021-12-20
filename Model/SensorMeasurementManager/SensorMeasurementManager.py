@@ -1,6 +1,7 @@
-from Data.SensorMeasurementRepository.SensorMeasurementRepository import SensorMeasurementRepository
 from Model.SensorMeasurementManager.ISensorMeasurementReporting import ISensorMeasurementReporting
 from Model.SensorMeasurementManager.ISensorMeasurements import ISensorMeasurements
+from Data.SensorMeasurementRepository.SensorMeasurementRepository import SensorMeasurementRepository
+from DTO.XSensorMeasurement import XSensorMeasurement
 
 
 class SensorMeasurementManager(ISensorMeasurementReporting, ISensorMeasurements):

@@ -1,8 +1,7 @@
-from sqlalchemy import Column, Integer, String, Float, ForeignKey
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import declarative_base
+from sqlalchemy import Column, Integer, String, Float
 
-from conf import Base
-
+Base = declarative_base()
 
 class SensorEntity(Base):
     __tablename__ = 'sensor'
@@ -10,6 +9,7 @@ class SensorEntity(Base):
     id = Column(Integer, primary_key=True)
     administrator = Column(String(200))
     dateAdded = Column(String(200))
+    forestAreaId = Column(String(200))
     name = Column(String(200))
     status = Column(String(200))
     type = Column(String(200))
@@ -17,11 +17,8 @@ class SensorEntity(Base):
     longitude = Column(Float(8))
     latitude = Column(Float(8))
 
-    forestAreaId = Column(Integer, ForeignKey('forest_areas.id'))
-    forest_area = relationship("ForestAreaEntity", back_populates="sensors")
-    emergency_notifications = relationship("EmergencyNotificationEntity", back_populates="sensor")
 
-    def __init__(self, administrator, dateAdded, forestAreaId, name, status, type, unit, longitude, latitude):
+    def __init__(self,administrator,dateAdded, forestAreaId, name, status, type, unit, longitude, latitude):
         self.administrator = administrator
         self.dateAdded = dateAdded
         self.forestAreaId = forestAreaId
