@@ -4,6 +4,7 @@ from Model.EmergencyNotificationManager.EmergencyNotificationRESTController impo
 from Model.ForestryManager.ForestriesRESTController import forestries_controller
 from Model.SensorMeasurementManager.SensorMeasurementRESTController import sensor_measurement_controller
 from Model.SensorsManager.SensorRESTController import sensors_controller
+from Model.ForestActionManager.ForestActionRESTController import forest_action_controller
 from Utils.APIException import APIException
 from conf import AUTH_PASS, AUTH_LOGIN
 
@@ -12,6 +13,7 @@ app.register_blueprint(forestries_controller)
 app.register_blueprint(sensors_controller)
 app.register_blueprint(sensor_measurement_controller)
 app.register_blueprint(emergency_notification_controller)
+app.register_blueprint(forest_action_controller)
 
 
 def check_auth(username, password):

@@ -7,6 +7,7 @@ from Entities.ForestationTypeEntity import ForestationTypeEntity
 from Entities.ForestryEntity import ForestryEntity
 from Entities.SensorEntity import SensorEntity
 from Entities.SensorMeasurementEntity import SensorMeasurementEntity
+from Entities.ForestActionEntity import ForestActionEntity
 from conf import DATABASE_URL
 
 engine = create_engine(DATABASE_URL)
@@ -17,3 +18,4 @@ ForestAreaEntity.metadata.create_all(bind=engine)
 ForestationTypeEntity.metadata.create_all(bind=engine)
 ForestryEntity.metadata.create_all(bind=engine)
 EmergencyNotificationEntity.metadata.create_all(bind=engine)
+ForestActionEntity.metadata.create_all(bind=engine)
