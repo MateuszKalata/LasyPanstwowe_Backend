@@ -29,7 +29,7 @@ def post_forest_action():
         request.json.get('tree_type')
     )
 
-    if request.json.get('type') == 'deforestration':
+    if request.json.get('type') == 'deforestation':
         xforestarea = forest_areas.read(request.json.get('forest_area_id'))
         for forestation_type in xforestarea.forestation_types:
             if str(forestation_type.get('name')) == xforestaction.tree_type:
