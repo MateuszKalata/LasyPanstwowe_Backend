@@ -16,9 +16,9 @@ def post_forest_action():
     xforestaction = XForestAction(
         request.json.get('type'),
         request.json.get('forest_area_id'),
-        None,
         request.json.get('start_date'),
         request.json.get('end_date'),
+        None,
         request.json.get('team_leader'),
         request.json.get('team_size'),
         request.json.get('additional_info'),
