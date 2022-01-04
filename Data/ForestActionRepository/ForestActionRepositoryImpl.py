@@ -43,14 +43,24 @@ class ForestActionRepositoryImpl(IForestActionRepository):
     def update(self, id):
         session = Session()
         forest_action = session.query(ForestActionEntity).filter(ForestActionEntity.id == id).one()
-        forestation_type = session.query(ForestationTypeEntity).filter(
-            ForestationTypeEntity.forest_area_id == forest_action.forest_area_id,
-            ForestationTypeEntity.name == forest_action.tree_type).one()
-        if forest_action.type == 'forestation':
-            session.query(ForestationTypeEntity).filter(
+        try:
+            forestation_type = session.query(ForestationTypeEntity).filter(
                 ForestationTypeEntity.forest_area_id == forest_action.forest_area_id,
-                ForestationTypeEntity.name == forest_action.tree_type).update(
-                {"surface": int(forestation_type.surface) + forest_action.number_of_trees_to_proceed})
+                ForestationTypeEntity.name == forest_action.tree_type).one()
+        except Exception:
+            forestation_type = None
+        if forest_action.type == 'forestation':
+            if forestation_type is not None:
+                session.query(ForestationTypeEntity).filter(
+                    ForestationTypeEntity.forest_area_id == forest_action.forest_area_id,
+                    ForestationTypeEntity.name == forest_action.tree_type).update(
+                    {"surface": int(forestation_type.surface) + forest_action.number_of_trees_to_proceed})
+            else:
+                new_forestation_type = ForestationTypeEntity(id=None,
+                                                             forest_area_id=forest_action.forest_area_id,
+                                                             name=forest_action.tree_type,
+                                                             surface=forest_action.number_of_trees_to_proceed)
+                session.add(new_forestation_type)
         else:
             session.query(ForestationTypeEntity).filter(
                 ForestationTypeEntity.forest_area_id == forest_action.forest_area_id,
