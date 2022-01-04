@@ -34,11 +34,11 @@ def post_forest_action():
         for forestation_type in xforestarea.forestation_types:
             if str(forestation_type.get('name')) == xforestaction.tree_type:
                 if int(forestation_type.get('surface')) < xforestaction.number_of_trees_to_proceed:
-                    raise APIException(f"number_of_trees_to_proceed can't be greater than number of trees!", 422)
+                    raise APIException(f"Liczba drzew do wycinki nie moze byc wieksza niz calkowita liczba drzew!", 422)
                 else:
                     id = forest_actions.create_forest_action(xforestaction)
                     return {"id": str(id)}, 200
-        raise APIException(f"Can't find matching type of tree", 422)
+        raise APIException(f"Nie znaleziono pasujacego drzewa.", 422)
     else:
         id = forest_actions.create_forest_action(xforestaction)
         return {"id": str(id)}, 200
