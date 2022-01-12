@@ -34,8 +34,8 @@ def submit():
     # test czy potrzebne dane są liczbą
     if (not isNumber(xsensor.longitude) or not isNumber(xsensor.latitude)):
         return "longitude, latitude should be numbers", 422
-    elif (not xsensor.forestAreaId == "" and not xsensor.forestAreaId.isdigit()):
-        return "forest_area_id should be positive integer", 422
+#     elif (not xsensor.forestAreaId == "" and not xsensor.forestAreaId.isdigit()):
+#         return "forest_area_id should be positive integer", 422
     id = sensorMenager.RegisterSensor(xsensor)
     if id == -1:
         return "Bad sensore type. Allowed types: fire, humidity, rain, wind, temperature, camera, camera_trap", 422
